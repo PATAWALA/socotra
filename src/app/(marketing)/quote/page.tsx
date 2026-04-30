@@ -1,16 +1,16 @@
 "use client";
 
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 import Image from "next/image";
 import { ArrowRight, Truck, TrendingUp, CheckCircle2, Shield, Users, Globe } from "lucide-react";
 import Link from "next/link";
 
-export default function QuotePage() {
+// Composant qui utilise useSearchParams
+function QuoteForm() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
   const isInvest = type === "invest";
-
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(e: React.FormEvent) {
@@ -47,7 +47,6 @@ export default function QuotePage() {
     <>
       {/* HERO */}
       <section className="relative py-24 lg:py-32 overflow-hidden">
-        {/* Image de fond */}
         <div className="absolute inset-0">
           {isInvest ? (
             <>
@@ -72,7 +71,6 @@ export default function QuotePage() {
           )}
         </div>
 
-        {/* Contenu */}
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <div className="max-w-3xl">
             <p className={`font-medium text-sm tracking-widest uppercase mb-4 ${isInvest ? "text-amber-200" : "text-green-300"}`}>
@@ -103,8 +101,7 @@ export default function QuotePage() {
                   <strong className="text-amber-300"> 25 ans d&apos;expérience</strong>, une flotte de 
                   <strong className="text-amber-300"> 200+ tracteurs</strong> et 
                   <strong className="text-amber-300"> 160 collaborateurs</strong>. 
-                  Nous ouvrons notre capital aux investisseurs stratégiques qui souhaitent 
-                  participer à la croissance du commerce en Afrique de l&apos;Ouest.
+                  Nous ouvrons notre capital aux investisseurs stratégiques.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
                   <div className="flex items-center gap-2 text-white/80">
@@ -127,7 +124,7 @@ export default function QuotePage() {
                   Bénéficiez de <strong className="text-green-300">25 ans d&apos;expertise</strong> en transport 
                   routier. Notre flotte de <strong className="text-green-300">200+ tracteurs</strong> et nos 
                   <strong className="text-green-300"> 160 collaborateurs</strong> sont mobilisés pour vous offrir 
-                  un service fiable, sécurisé et ponctuel à travers <strong className="text-green-300">7 pays </strong> d&apos;Afrique de l&apos;Ouest.
+                  un service fiable à travers <strong className="text-green-300">7 pays</strong> d&apos;Afrique de l&apos;Ouest.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
                   <div className="flex items-center gap-2 text-white/80">
@@ -160,9 +157,7 @@ export default function QuotePage() {
                   Formulaire de contact investisseur
                 </h2>
                 <p className="text-gray-500">
-                  Remplissez ce formulaire et notre direction vous contactera pour discuter 
-                  des opportunités de partenariat et d&apos;investissement. Vos informations 
-                  restent strictement confidentielles.
+                  Notre direction vous contactera pour discuter des opportunités de partenariat.
                 </p>
               </div>
             ) : (
@@ -171,20 +166,16 @@ export default function QuotePage() {
                   Votre devis personnalisé
                 </h2>
                 <p className="text-gray-500">
-                  Décrivez votre besoin de transport et recevez une proposition commerciale 
-                  détaillée sous 24 heures. Service gratuit et sans engagement.
+                  Recevez une proposition commerciale détaillée sous 24 heures. Gratuit et sans engagement.
                 </p>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              
               {!isInvest && (
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
-                    Type de service
-                  </label>
-                  <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700 bg-white">
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Type de service</label>
+                  <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent">
                     <option value="">Sélectionnez un service</option>
                     <option value="agricultural">Transport Agricole</option>
                     <option value="petroleum">Transport Pétrolier</option>
@@ -201,127 +192,57 @@ export default function QuotePage() {
                   <label className="block text-sm font-semibold text-gray-900 mb-2">
                     {isInvest ? "Entreprise / Investisseur *" : "Nom de l'entreprise *"}
                   </label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder={isInvest ? "Nom de votre entreprise ou groupe" : "Ex: Société Ivoirienne de Commerce"}
-                  />
+                  <input type="text" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
-                    Nom du contact *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="Ex: Jean Kouassi"
-                  />
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Nom du contact *</label>
+                  <input type="text" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
-                    Email professionnel *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="contact@entreprise.ci"
-                  />
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Email *</label>
+                  <input type="email" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
-                    Téléphone *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="+225 XX XX XX XX XX"
-                  />
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Téléphone *</label>
+                  <input type="tel" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
                 </div>
               </div>
 
               {!isInvest && (
-                <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-900 mb-2">
-                        Point de départ *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        placeholder="Ex: Abidjan"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-900 mb-2">
-                        Destination *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        placeholder="Ex: Bamako"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-900 mb-2">
-                        Type de marchandise *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        placeholder="Ex: Cacao, ciment..."
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-900 mb-2">
-                        Poids estimé (tonnes)
-                      </label>
-                      <input
-                        type="number"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        placeholder="Ex: 25"
-                      />
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Point de départ *</label>
+                    <input type="text" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
                   </div>
-                </>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Destination *</label>
+                    <input type="text" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Type de marchandise *</label>
+                    <input type="text" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Poids estimé (tonnes)</label>
+                    <input type="number" className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                  </div>
+                </div>
               )}
 
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
                   {isInvest ? "Votre projet d'investissement" : "Précisions complémentaires"}
                 </label>
-                <textarea
-                  rows={5}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
-                  placeholder={
-                    isInvest
-                      ? "Décrivez votre projet : montant envisagé, type de partenariat recherché, objectifs de croissance..."
-                      : "Détails supplémentaires sur vos besoins : volumes réguliers, délais, contraintes particulières..."
-                  }
-                />
+                <textarea rows={5} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none" />
               </div>
-
-              <p className="text-xs text-gray-400 text-center">
-                En envoyant ce formulaire, vous acceptez que SOCOTRA utilise vos données pour vous recontacter. 
-                Consultez notre politique de confidentialité.
-              </p>
 
               <button
                 type="submit"
                 className={`w-full py-4 text-white font-semibold rounded-xl transition-all text-lg ${
-                  isInvest
-                    ? "bg-amber-500 hover:bg-amber-600 shadow-lg shadow-amber-500/25"
-                    : "bg-green-600 hover:bg-green-500 shadow-lg shadow-green-600/25"
+                  isInvest ? "bg-amber-500 hover:bg-amber-600" : "bg-green-600 hover:bg-green-500"
                 }`}
               >
                 {isInvest ? "Envoyer ma demande d'investissement" : "Recevoir mon devis gratuit"}
@@ -332,5 +253,21 @@ export default function QuotePage() {
         </div>
       </section>
     </>
+  );
+}
+
+// Composant principal avec Suspense
+export default function QuotePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-10 h-10 border-4 border-green-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-500">Chargement...</p>
+        </div>
+      </div>
+    }>
+      <QuoteForm />
+    </Suspense>
   );
 }
