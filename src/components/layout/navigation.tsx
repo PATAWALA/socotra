@@ -2,16 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { 
-  Truck, 
   Phone, 
   Mail, 
   MapPin, 
   ChevronDown,
   Menu,
   X,
-  Clock
+  Clock,
+  TrendingUp
 } from "lucide-react";
 import { COMPANY_INFO } from "@/lib/utils/constants";
 
@@ -31,7 +32,6 @@ const navigation = [
   },
   { name: "Actualités", href: "/news" },
   { name: "À propos", href: "/about" },
-  { name: "Contact", href: "/quote" },
 ];
 
 export function Navbar() {
@@ -41,9 +41,7 @@ export function Navbar() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -53,17 +51,13 @@ export function Navbar() {
     setActiveDropdown(null);
   }, [pathname]);
 
-  // Fonction pour vérifier si le lien est actif
   function isActive(href: string) {
-    if (href === "/") {
-      return pathname === "/";
-    }
-    // Pour /services et toutes ses ancres
-    if (href.startsWith("/services")) {
-      return pathname.startsWith("/services");
-    }
-    // Pour les autres pages
-    return pathname === href || pathname.startsWith(href);
+    if (href === "/") return pathname === "/";
+    if (href.startsWith("/services")) return pathname.startsWith("/services");
+    if (href.startsWith("/news")) return pathname.startsWith("/news");
+    if (href.startsWith("/about")) return pathname.startsWith("/about");
+    if (href.startsWith("/quote")) return pathname.startsWith("/quote");
+    return pathname === href;
   }
 
   return (
@@ -77,11 +71,11 @@ export function Navbar() {
                 <Clock className="h-4 w-4 text-green-300" />
                 Assistance 24/7
               </span>
-              <a href={`tel:${COMPANY_INFO.phone}`} className="flex items-center gap-2 hover:text-green-300 transition-colors">
+              <a href={`tel:${COMPANY_INFO.phone}`} className="flex items-center gap-2 hover:text-green-300">
                 <Phone className="h-4 w-4 text-green-300" />
                 {COMPANY_INFO.phone}
               </a>
-              <a href={`mailto:${COMPANY_INFO.email}`} className="flex items-center gap-2 hover:text-green-300 transition-colors">
+              <a href={`mailto:${COMPANY_INFO.email}`} className="flex items-center gap-2 hover:text-green-300">
                 <Mail className="h-4 w-4 text-green-300" />
                 {COMPANY_INFO.email}
               </a>
@@ -95,66 +89,36 @@ export function Navbar() {
       </div>
 
       {/* Main Navigation */}
-      <header 
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled 
-            ? "bg-white shadow-lg" 
-            : "bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80"
-        }`}
-      >
+      <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg" : "bg-white/95 backdrop-blur"}`}>
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
+            
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative">
-                <div className="absolute inset-0 bg-green-600 rounded-lg rotate-6 transition-transform group-hover:rotate-12" />
-                <div className="relative bg-green-700 p-2.5 rounded-lg z-10">
-                  <Truck className="h-7 w-7 text-white" />
-                </div>
+            <Link href="/" className="flex items-center gap-3">
+              <div className="relative w-10 h-10 rounded-lg overflow-hidden">
+                <Image src="/images/hero/logo.jpg" alt="SOCOTRA" width={40} height={40} className="object-cover" />
               </div>
               <div>
-                <span className="text-2xl font-bold text-green-800 tracking-tight">SOCOTRA</span>
-                <span className="block text-[10px] text-gray-500 font-medium uppercase tracking-wider">
-                  Transport & Logistique
-                </span>
+                <span className="text-xl font-bold text-green-800">SOCOTRA</span>
+                <span className="block text-[10px] text-gray-500 uppercase tracking-wider">Transport & Logistique</span>
               </div>
             </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
               {navigation.map((item) => (
-                <div
-                  key={item.name}
-                  className="relative"
-                  onMouseEnter={() => item.children && setActiveDropdown(item.name)}
-                  onMouseLeave={() => setActiveDropdown(null)}
-                >
+                <div key={item.name} className="relative" onMouseEnter={() => item.children && setActiveDropdown(item.name)} onMouseLeave={() => setActiveDropdown(null)}>
                   <Link
                     href={item.href}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1 ${
-                      isActive(item.href)
-                        ? "text-green-700 bg-green-50"
-                        : "text-gray-700 hover:text-green-700 hover:bg-green-50"
-                    }`}
+                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1 ${isActive(item.href) ? "text-green-700 bg-green-50" : "text-gray-700 hover:text-green-700 hover:bg-green-50"}`}
                   >
                     {item.name}
-                    {item.children && (
-                      <ChevronDown className={`h-4 w-4 transition-transform ${
-                        activeDropdown === item.name ? "rotate-180" : ""
-                      }`} />
-                    )}
+                    {item.children && <ChevronDown className={`h-4 w-4 transition-transform ${activeDropdown === item.name ? "rotate-180" : ""}`} />}
                   </Link>
-
-                  {/* Dropdown */}
                   {item.children && activeDropdown === item.name && (
                     <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-100 py-3 z-50">
                       {item.children.map((child) => (
-                        <Link
-                          key={child.name}
-                          href={child.href}
-                          className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors"
-                          onClick={() => setActiveDropdown(null)}
-                        >
+                        <Link key={child.name} href={child.href} className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700" onClick={() => setActiveDropdown(null)}>
                           {child.name}
                         </Link>
                       ))}
@@ -164,27 +128,28 @@ export function Navbar() {
               ))}
             </nav>
 
-            {/* CTA Button */}
-            <div className="hidden lg:flex items-center gap-4">
+            {/* Boutons */}
+            <div className="hidden lg:flex items-center gap-3">
+              {/* Bouton Investir */}
+              <Link
+                href="/quote?type=invest"
+                className="flex items-center gap-1.5 px-4 py-2.5 bg-amber-500 text-white font-semibold rounded-lg hover:bg-amber-600 transition-all text-sm"
+              >
+                <TrendingUp className="h-4 w-4" />
+                Investir
+              </Link>
+              {/* Bouton Devis */}
               <Link
                 href="/quote"
-                className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-all shadow-lg shadow-green-600/25 hover:shadow-green-600/40 hover:-translate-y-0.5"
+                className="px-5 py-2.5 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-all text-sm"
               >
                 Devis gratuit
               </Link>
             </div>
 
             {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              aria-label="Menu"
-            >
-              {isMobileMenuOpen ? (
-                <X className="h-6 w-6 text-gray-700" />
-              ) : (
-                <Menu className="h-6 w-6 text-gray-700" />
-              )}
+            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="lg:hidden p-2 rounded-lg hover:bg-gray-100">
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
@@ -195,36 +160,24 @@ export function Navbar() {
             <div className="container mx-auto px-4 py-4 space-y-1">
               {navigation.map((item) => (
                 <div key={item.name}>
-                  <Link
-                    href={item.href}
-                    className={`block px-4 py-3 rounded-lg font-medium ${
-                      isActive(item.href)
-                        ? "text-green-700 bg-green-50"
-                        : "text-gray-700 hover:bg-green-50 hover:text-green-700"
-                    }`}
-                  >
+                  <Link href={item.href} className={`block px-4 py-3 rounded-lg font-medium ${isActive(item.href) ? "text-green-700 bg-green-50" : "text-gray-700"}`}>
                     {item.name}
                   </Link>
                   {item.children && (
                     <div className="ml-4 space-y-1 border-l-2 border-green-200 pl-4">
                       {item.children.map((child) => (
-                        <Link
-                          key={child.name}
-                          href={child.href}
-                          className="block px-4 py-2 text-sm text-gray-600 hover:bg-green-50 rounded-lg"
-                        >
-                          {child.name}
-                        </Link>
+                        <Link key={child.name} href={child.href} className="block px-4 py-2 text-sm text-gray-600">{child.name}</Link>
                       ))}
                     </div>
                   )}
                 </div>
               ))}
-              <div className="pt-4">
-                <Link
-                  href="/quote"
-                  className="block w-full text-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
-                >
+              <div className="pt-4 space-y-2">
+                <Link href="/quote?type=invest" className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-amber-500 text-white font-semibold rounded-lg">
+                  <TrendingUp className="h-4 w-4" />
+                  Investir
+                </Link>
+                <Link href="/quote" className="block w-full text-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg">
                   Devis gratuit
                 </Link>
               </div>
