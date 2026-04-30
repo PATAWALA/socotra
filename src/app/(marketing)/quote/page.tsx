@@ -3,10 +3,9 @@
 import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { ArrowRight, Truck, TrendingUp, CheckCircle2, Shield, Users, Globe } from "lucide-react";
+import { ArrowRight, Truck, TrendingUp, CheckCircle2, Shield, Users, Globe, Building2, User, Mail, Phone, MapPin, Package, Weight } from "lucide-react";
 import Link from "next/link";
 
-// Composant qui utilise useSearchParams
 function QuoteForm() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
@@ -23,18 +22,20 @@ function QuoteForm() {
       <section className="py-32 text-center bg-gray-50 min-h-screen flex items-center">
         <div className="container mx-auto px-6 max-w-lg">
           <div className="bg-white rounded-2xl shadow-xl p-10">
-            <div className="text-5xl mb-4">✅</div>
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle2 className="h-10 w-10 text-green-600" />
+            </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              {isInvest ? "Demande d'investissement envoyée avec succès !" : "Votre demande de devis a bien été reçue !"}
+              {isInvest ? "Demande d'investissement envoyée !" : "Demande de devis envoyée !"}
             </h2>
-            <p className="text-gray-500 mb-4">
+            <p className="text-gray-500 mb-2">
               Notre équipe analysera votre demande avec attention.
             </p>
             <p className="text-gray-400 text-sm mb-8">
               Délai de réponse : 24 à 48 heures ouvrées.
             </p>
-            <Link href="/" className="inline-flex items-center text-green-600 font-semibold hover:text-green-700">
-              <ArrowRight className="mr-2 h-4 w-4 rotate-180" />
+            <Link href="/" className="inline-flex items-center gap-2 text-green-600 font-semibold hover:text-green-700 bg-green-50 px-6 py-3 rounded-xl transition-colors">
+              <ArrowRight className="h-4 w-4 rotate-180" />
               Retour à l&apos;accueil
             </Link>
           </div>
@@ -79,17 +80,17 @@ function QuoteForm() {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 flex items-center gap-4">
               {isInvest ? (
                 <>
-                  <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                  <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm flex-shrink-0">
                     <TrendingUp className="h-8 w-8 text-amber-300" />
                   </div>
                   Investir dans SOCOTRA
                 </>
               ) : (
                 <>
-                  <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                  <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm flex-shrink-0">
                     <Truck className="h-8 w-8 text-green-300" />
                   </div>
-                  Demander un devis
+                  Demander un devis transport
                 </>
               )}
             </h1>
@@ -97,10 +98,10 @@ function QuoteForm() {
             {isInvest ? (
               <div className="space-y-4">
                 <p className="text-xl text-white/90 leading-relaxed">
-                  SOCOTRA est le leader du transport routier en Côte d&apos;Ivoire avec 
-                  <strong className="text-amber-300"> 25 ans d&apos;expérience</strong>, une flotte de 
-                  <strong className="text-amber-300"> 200+ tracteurs</strong> et 
-                  <strong className="text-amber-300"> 160 collaborateurs</strong>. 
+                  SOCOTRA est le leader du transport routier en Côte d&apos;Ivoire avec{" "}
+                  <strong className="text-amber-300">25 ans d&apos;expérience</strong>, une flotte de{" "}
+                  <strong className="text-amber-300">200+ tracteurs</strong> et{" "}
+                  <strong className="text-amber-300">160 collaborateurs</strong>.{" "}
                   Nous ouvrons notre capital aux investisseurs stratégiques.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
@@ -122,8 +123,8 @@ function QuoteForm() {
               <div className="space-y-4">
                 <p className="text-xl text-white/90 leading-relaxed">
                   Bénéficiez de <strong className="text-green-300">25 ans d&apos;expertise</strong> en transport 
-                  routier. Notre flotte de <strong className="text-green-300">200+ tracteurs</strong> et nos 
-                  <strong className="text-green-300"> 160 collaborateurs</strong> sont mobilisés pour vous offrir 
+                  routier. Notre flotte de <strong className="text-green-300">200+ tracteurs</strong> et nos{" "}
+                  <strong className="text-green-300">160 collaborateurs</strong> sont mobilisés pour vous offrir 
                   un service fiable à travers <strong className="text-green-300">7 pays</strong> d&apos;Afrique de l&apos;Ouest.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
@@ -147,102 +148,196 @@ function QuoteForm() {
       </section>
 
       {/* Formulaire */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-6 max-w-2xl">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 lg:p-10">
+      <section className="py-16 lg:py-20 bg-gray-50">
+        <div className="container mx-auto px-6 max-w-3xl">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 lg:p-12">
             
-            {isInvest ? (
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  Formulaire de contact investisseur
-                </h2>
-                <p className="text-gray-500">
-                  Notre direction vous contactera pour discuter des opportunités de partenariat.
-                </p>
+            {/* En-tête du formulaire */}
+            <div className="mb-10 text-center">
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${isInvest ? "bg-amber-100" : "bg-green-100"}`}>
+                {isInvest ? (
+                  <TrendingUp className="h-8 w-8 text-amber-600" />
+                ) : (
+                  <Truck className="h-8 w-8 text-green-600" />
+                )}
               </div>
-            ) : (
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  Votre devis personnalisé
-                </h2>
-                <p className="text-gray-500">
-                  Recevez une proposition commerciale détaillée sous 24 heures. Gratuit et sans engagement.
-                </p>
-              </div>
-            )}
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                {isInvest ? "Formulaire de contact investisseur" : "Votre devis personnalisé"}
+              </h2>
+              <p className="text-gray-500">
+                {isInvest 
+                  ? "Remplissez ce formulaire et notre direction vous contactera pour discuter des opportunités de partenariat." 
+                  : "Décrivez votre besoin et recevez une proposition commerciale détaillée sous 24 heures."}
+              </p>
+            </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              
+              {/* Service (seulement devis) */}
               {!isInvest && (
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">Type de service</label>
-                  <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent">
-                    <option value="">Sélectionnez un service</option>
-                    <option value="agricultural">Transport Agricole</option>
-                    <option value="petroleum">Transport Pétrolier</option>
-                    <option value="cement">Transport de Ciment</option>
-                    <option value="containers">Transport Conteneurs</option>
-                    <option value="logistics">Logistique & Stockage</option>
-                    <option value="international">Transport International</option>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    <Package className="h-4 w-4 inline mr-1.5 text-green-600" />
+                    Type de service *
+                  </label>
+                  <select 
+                    required
+                    className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-700 bg-white transition-colors"
+                  >
+                    <option value="">Sélectionnez le type de transport souhaité</option>
+                    <option value="agricultural">Transport Agricole (cacao, café, coton, anacarde)</option>
+                    <option value="petroleum">Transport Pétrolier (hydrocarbures, carburants)</option>
+                    <option value="cement">Transport de Ciment (vrac ou sacs)</option>
+                    <option value="containers">Transport Conteneurs (portuaire et régional)</option>
+                    <option value="logistics">Logistique & Stockage (entrepôts, cross-docking)</option>
+                    <option value="international">Transport International (sous-région)</option>
                   </select>
                 </div>
               )}
 
+              {/* Entreprise + Contact */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    <Building2 className="h-4 w-4 inline mr-1.5 text-green-600" />
                     {isInvest ? "Entreprise / Investisseur *" : "Nom de l'entreprise *"}
                   </label>
-                  <input type="text" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                  <input 
+                    type="text" 
+                    required 
+                    placeholder={isInvest ? "Nom de votre entreprise ou groupe" : "Ex : Société Ivoirienne de Commerce"}
+                    className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
+                  />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">Nom du contact *</label>
-                  <input type="text" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    <User className="h-4 w-4 inline mr-1.5 text-green-600" />
+                    Nom du contact *
+                  </label>
+                  <input 
+                    type="text" 
+                    required 
+                    placeholder="Ex : Jean Kouassi"
+                    className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
+                  />
                 </div>
               </div>
 
+              {/* Email + Téléphone */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">Email *</label>
-                  <input type="email" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    <Mail className="h-4 w-4 inline mr-1.5 text-green-600" />
+                    Email professionnel *
+                  </label>
+                  <input 
+                    type="email" 
+                    required 
+                    placeholder="Ex : contact@entreprise.ci"
+                    className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
+                  />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">Téléphone *</label>
-                  <input type="tel" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    <Phone className="h-4 w-4 inline mr-1.5 text-green-600" />
+                    Téléphone *
+                  </label>
+                  <input 
+                    type="tel" 
+                    required 
+                    placeholder="Ex : +225 01 02 03 04 05"
+                    className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
+                  />
                 </div>
               </div>
 
+              {/* Champs spécifiques transport */}
               {!isInvest && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-900 mb-2">Point de départ *</label>
-                    <input type="text" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-900 mb-2">
+                        <MapPin className="h-4 w-4 inline mr-1.5 text-green-600" />
+                        Point de départ *
+                      </label>
+                      <input 
+                        type="text" 
+                        required 
+                        placeholder="Ex : Abidjan, Zone Industrielle"
+                        className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-900 mb-2">
+                        <MapPin className="h-4 w-4 inline mr-1.5 text-green-600" />
+                        Destination *
+                      </label>
+                      <input 
+                        type="text" 
+                        required 
+                        placeholder="Ex : Bamako, Mali"
+                        className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-900 mb-2">
+                        <Package className="h-4 w-4 inline mr-1.5 text-green-600" />
+                        Type de marchandise *
+                      </label>
+                      <input 
+                        type="text" 
+                        required 
+                        placeholder="Ex : Cacao en sacs, ciment en vrac..."
+                        className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-900 mb-2">
+                        <Weight className="h-4 w-4 inline mr-1.5 text-green-600" />
+                        Poids estimé (tonnes)
+                      </label>
+                      <input 
+                        type="number" 
+                        placeholder="Ex : 25"
+                        className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-900 mb-2">Destination *</label>
-                    <input type="text" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-900 mb-2">Type de marchandise *</label>
-                    <input type="text" required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-900 mb-2">Poids estimé (tonnes)</label>
-                    <input type="number" className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" />
-                  </div>
-                </div>
+                </>
               )}
 
+              {/* Message */}
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
                   {isInvest ? "Votre projet d'investissement" : "Précisions complémentaires"}
                 </label>
-                <textarea rows={5} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none" />
+                <textarea 
+                  rows={5} 
+                  placeholder={
+                    isInvest 
+                      ? "Décrivez votre projet : montant envisagé, type de partenariat recherché, objectifs de croissance, pays ciblés..."
+                      : "Détails supplémentaires : volumes réguliers, fréquence des livraisons, contraintes particulières, délais souhaités..."
+                  }
+                  className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors resize-none"
+                />
               </div>
 
+              {/* Note de confidentialité */}
+              <div className="flex items-start gap-2 text-xs text-gray-400 bg-gray-50 rounded-xl p-4">
+                <Shield className="h-4 w-4 flex-shrink-0 mt-0.5 text-gray-400" />
+                <span>
+                  Vos informations sont strictement confidentielles et ne seront jamais partagées. 
+                  En soumettant ce formulaire, vous acceptez d&apos;être recontacté par notre équipe.
+                </span>
+              </div>
+
+              {/* Bouton */}
               <button
                 type="submit"
-                className={`w-full py-4 text-white font-semibold rounded-xl transition-all text-lg ${
-                  isInvest ? "bg-amber-500 hover:bg-amber-600" : "bg-green-600 hover:bg-green-500"
+                className={`w-full py-4 text-white font-semibold rounded-xl transition-all text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 ${
+                  isInvest 
+                    ? "bg-amber-500 hover:bg-amber-600 shadow-amber-500/25" 
+                    : "bg-green-600 hover:bg-green-500 shadow-green-600/25"
                 }`}
               >
                 {isInvest ? "Envoyer ma demande d'investissement" : "Recevoir mon devis gratuit"}
@@ -256,14 +351,13 @@ function QuoteForm() {
   );
 }
 
-// Composant principal avec Suspense
 export default function QuotePage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-10 h-10 border-4 border-green-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-500">Chargement...</p>
+          <div className="w-12 h-12 border-4 border-green-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-500 font-medium">Chargement du formulaire...</p>
         </div>
       </div>
     }>
