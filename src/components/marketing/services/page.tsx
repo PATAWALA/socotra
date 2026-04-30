@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, CheckCircle2, Shield, Clock, Truck, Package } from "lucide-react";
+import { ArrowRight, CheckCircle2,Truck} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Nos Services - SOCOTRA | Transport et Logistique",
