@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Shield, Clock, Globe, Send } from "lucide-react";
+import { Shield, Clock, Globe, Send, User, Mail, Phone, Building2 } from "lucide-react";
 
 const services = [
   "Transport Agricole",
@@ -19,6 +19,10 @@ export function HeroSection() {
   const [arrivee, setArrivee] = useState("");
   const [marchandise, setMarchandise] = useState("");
   const [poids, setPoids] = useState("");
+  const [company, setCompany] = useState("");
+  const [contact, setContact] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(e: React.FormEvent) {
@@ -40,7 +44,7 @@ export function HeroSection() {
             Demande envoyée avec succès !
           </h2>
           <p className="text-xl text-green-200 mb-8">
-            Notre équipe vous contactera dans les 24 heures.
+            Notre équipe commerciale vous contactera dans les 24 heures.
           </p>
           <button
             onClick={() => setSubmitted(false)}
@@ -112,17 +116,88 @@ export function HeroSection() {
 
             {/* DROITE - Formulaire */}
             <div>
-              <div className="bg-white rounded-2xl shadow-2xl p-6 lg:p-8">
+              <div className="bg-white rounded-2xl shadow-2xl p-6 lg:p-8 max-h-[80vh] overflow-y-auto">
                 <div className="mb-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-1">
                     Demandez votre devis gratuit
                   </h3>
                   <p className="text-sm text-gray-500">
-                    Réponse sous 24 heures
+                    Réponse sous 24 heures par notre équipe
                   </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  
+                  {/* INFOS DE CONTACT */}
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                      <Building2 className="h-3.5 w-3.5 inline mr-1" />
+                      Entreprise *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={company}
+                      onChange={(e) => setCompany(e.target.value)}
+                      placeholder="Nom de votre entreprise"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm bg-gray-50 focus:bg-white transition-colors placeholder:text-gray-400"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                      <User className="h-3.5 w-3.5 inline mr-1" />
+                      Nom du contact *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={contact}
+                      onChange={(e) => setContact(e.target.value)}
+                      placeholder="Votre nom et prénom"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm bg-gray-50 focus:bg-white transition-colors placeholder:text-gray-400"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                        <Mail className="h-3.5 w-3.5 inline mr-1" />
+                        Email *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="contact@exemple.ci"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm bg-gray-50 focus:bg-white transition-colors placeholder:text-gray-400"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                        <Phone className="h-3.5 w-3.5 inline mr-1" />
+                        Téléphone *
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="+225 XX XX XX XX"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm bg-gray-50 focus:bg-white transition-colors placeholder:text-gray-400"
+                      />
+                    </div>
+                  </div>
+
+                  {/* LIGNE DE SÉPARATION */}
+                  <div className="border-t border-gray-100 pt-4">
+                    <p className="text-xs font-semibold text-gray-500 uppercase mb-3">
+                      Détails du transport
+                    </p>
+                  </div>
+
+                  {/* TYPE DE SERVICE */}
                   <div>
                     <label className="block text-xs font-semibold text-gray-700 mb-1.5">
                       Type de service *
@@ -140,6 +215,7 @@ export function HeroSection() {
                     </select>
                   </div>
 
+                  {/* DÉPART / ARRIVÉE */}
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="block text-xs font-semibold text-gray-700 mb-1.5">
@@ -169,6 +245,7 @@ export function HeroSection() {
                     </div>
                   </div>
 
+                  {/* MARCHANDISE / POIDS */}
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="block text-xs font-semibold text-gray-700 mb-1.5">
@@ -197,9 +274,10 @@ export function HeroSection() {
                     </div>
                   </div>
 
+                  {/* BOUTON */}
                   <button
                     type="submit"
-                    className="w-full py-3.5 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-500 transition-all text-base shadow-lg shadow-green-600/20 hover:shadow-green-600/30 flex items-center justify-center gap-2"
+                    className="w-full py-3.5 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-500 transition-all text-base shadow-lg shadow-green-600/20 hover:shadow-green-600/30 flex items-center justify-center gap-2 mt-2"
                   >
                     <Send className="h-4 w-4" />
                     Recevoir mon devis gratuit
