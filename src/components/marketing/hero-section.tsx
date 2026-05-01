@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Shield, Clock, Globe, Send, User, Phone, Package, MapPin, Scale } from "lucide-react";
+import { Shield, Clock, Globe, Send } from "lucide-react";
 
 const services = [
   "Transport Agricole",
@@ -112,48 +112,57 @@ export function HeroSection() {
               </p>
             </div>
 
-            {/* DROITE - Formulaire compact */}
+            {/* DROITE - Formulaire avec labels */}
             <div>
               <div className="bg-white rounded-2xl shadow-2xl p-6 lg:p-8">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">
+                <h3 className="text-lg font-bold text-gray-900 mb-5">
                   Devis gratuit en 24h
                 </h3>
 
-                <form onSubmit={handleSubmit} className="space-y-3">
+                <form onSubmit={handleSubmit} className="space-y-4">
                   
                   {/* Ligne 1 : Nom & Téléphone */}
                   <div className="grid grid-cols-2 gap-3">
                     <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                        Nom / Entreprise
+                      </label>
                       <input
                         type="text"
                         required
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="Nom & Entreprise *"
-                        className="w-full px-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400"
+                        placeholder="Votre nom ou le nom de votre entreprise"
+                        className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
                       />
                     </div>
                     <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                        Téléphone
+                      </label>
                       <input
                         type="tel"
                         required
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        placeholder="Téléphone *"
-                        className="w-full px-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400"
+                        placeholder="+225 01 02 03 04 05"
+                        className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
                       />
                     </div>
                   </div>
 
                   {/* Type de transport */}
                   <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                      Type de transport
+                    </label>
                     <select
                       required
                       value={service}
                       onChange={(e) => setService(e.target.value)}
-                      className="w-full px-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-700"
+                      className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-700 transition-colors"
                     >
-                      <option value="">Type de transport *</option>
+                      <option value="">Sélectionnez un type de transport</option>
                       {services.map((s) => (
                         <option key={s} value={s}>{s}</option>
                       ))}
@@ -162,51 +171,59 @@ export function HeroSection() {
 
                   {/* Ligne 2 : Départ & Destination */}
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="relative">
-                      <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                        Départ
+                      </label>
                       <input
                         type="text"
                         required
                         value={depart}
                         onChange={(e) => setDepart(e.target.value)}
-                        placeholder="Départ *"
-                        className="w-full pl-10 pr-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400"
+                        placeholder="Ex : Abidjan"
+                        className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
                       />
                     </div>
-                    <div className="relative">
-                      <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                        Destination
+                      </label>
                       <input
                         type="text"
                         required
                         value={arrivee}
                         onChange={(e) => setArrivee(e.target.value)}
-                        placeholder="Destination *"
-                        className="w-full pl-10 pr-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400"
+                        placeholder="Ex : Bamako"
+                        className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
                       />
                     </div>
                   </div>
 
                   {/* Ligne 3 : Marchandise & Tonnes */}
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="relative">
-                      <Package className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                        Marchandise
+                      </label>
                       <input
                         type="text"
                         required
                         value={marchandise}
                         onChange={(e) => setMarchandise(e.target.value)}
-                        placeholder="Marchandise *"
-                        className="w-full pl-10 pr-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400"
+                        placeholder="Ex : Cacao, ciment..."
+                        className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
                       />
                     </div>
-                    <div className="relative">
-                      <Scale className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                        Tonnes estimées
+                      </label>
                       <input
                         type="number"
                         value={tonnes}
                         onChange={(e) => setTonnes(e.target.value)}
-                        placeholder="Tonnes estimées"
-                        className="w-full pl-10 pr-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400"
+                        placeholder="Ex : 25"
+                        className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400 transition-colors"
                       />
                     </div>
                   </div>
@@ -214,7 +231,7 @@ export function HeroSection() {
                   {/* Bouton */}
                   <button
                     type="submit"
-                    className="w-full py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-500 transition-all text-sm shadow-lg shadow-green-600/20 flex items-center justify-center gap-2"
+                    className="w-full py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-500 transition-all text-sm shadow-lg shadow-green-600/20 flex items-center justify-center gap-2 mt-1"
                   >
                     <Send className="h-4 w-4" />
                     Recevoir mon devis gratuit
