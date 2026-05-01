@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Shield, Clock, Globe, Send, User, Mail, Phone, Building2 } from "lucide-react";
+import { Shield, Clock, Globe, Send, User, Phone, Package, MapPin, Scale } from "lucide-react";
 
 const services = [
   "Transport Agricole",
@@ -11,18 +11,17 @@ const services = [
   "Transport Conteneurs",
   "Logistique & Stockage",
   "Transport International",
+  "Autre",
 ];
 
 export function HeroSection() {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [service, setService] = useState("");
   const [depart, setDepart] = useState("");
   const [arrivee, setArrivee] = useState("");
   const [marchandise, setMarchandise] = useState("");
-  const [poids, setPoids] = useState("");
-  const [company, setCompany] = useState("");
-  const [contact, setContact] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [tonnes, setTonnes] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(e: React.FormEvent) {
@@ -41,16 +40,16 @@ export function HeroSection() {
             <Send className="h-10 w-10 text-white" />
           </div>
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-            Demande envoyée avec succès !
+            Demande envoyée !
           </h2>
           <p className="text-xl text-green-200 mb-8">
-            Notre équipe commerciale vous contactera dans les 24 heures.
+            On vous appelle dans les 24 heures.
           </p>
           <button
             onClick={() => setSubmitted(false)}
             className="inline-flex items-center px-6 py-3 bg-white text-green-900 font-semibold rounded-xl hover:bg-green-50 transition-colors"
           >
-            Faire une autre demande
+            Nouvelle demande
           </button>
         </div>
       </section>
@@ -71,10 +70,9 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
       </div>
 
-      {/* Contenu */}
       <div className="relative z-10 w-full py-20 lg:py-0">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             
             {/* GAUCHE - Texte */}
             <div>
@@ -114,176 +112,115 @@ export function HeroSection() {
               </p>
             </div>
 
-            {/* DROITE - Formulaire */}
+            {/* DROITE - Formulaire compact */}
             <div>
-              <div className="bg-white rounded-2xl shadow-2xl p-6 lg:p-8 max-h-[80vh] overflow-y-auto">
-                <div className="mb-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">
-                    Demandez votre devis gratuit
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    Réponse sous 24 heures par notre équipe
-                  </p>
-                </div>
+              <div className="bg-white rounded-2xl shadow-2xl p-6 lg:p-8">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">
+                  Devis gratuit en 24h
+                </h3>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-3">
                   
-                  {/* INFOS DE CONTACT */}
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-                      <Building2 className="h-3.5 w-3.5 inline mr-1" />
-                      Entreprise *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={company}
-                      onChange={(e) => setCompany(e.target.value)}
-                      placeholder="Nom de votre entreprise"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm bg-gray-50 focus:bg-white transition-colors placeholder:text-gray-400"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-                      <User className="h-3.5 w-3.5 inline mr-1" />
-                      Nom du contact *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={contact}
-                      onChange={(e) => setContact(e.target.value)}
-                      placeholder="Votre nom et prénom"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm bg-gray-50 focus:bg-white transition-colors placeholder:text-gray-400"
-                    />
-                  </div>
-
+                  {/* Ligne 1 : Nom & Téléphone */}
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-                        <Mail className="h-3.5 w-3.5 inline mr-1" />
-                        Email *
-                      </label>
                       <input
-                        type="email"
+                        type="text"
                         required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="contact@exemple.ci"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm bg-gray-50 focus:bg-white transition-colors placeholder:text-gray-400"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Nom & Entreprise *"
+                        className="w-full px-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-                        <Phone className="h-3.5 w-3.5 inline mr-1" />
-                        Téléphone *
-                      </label>
                       <input
                         type="tel"
                         required
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        placeholder="+225 XX XX XX XX"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm bg-gray-50 focus:bg-white transition-colors placeholder:text-gray-400"
+                        placeholder="Téléphone *"
+                        className="w-full px-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400"
                       />
                     </div>
                   </div>
 
-                  {/* LIGNE DE SÉPARATION */}
-                  <div className="border-t border-gray-100 pt-4">
-                    <p className="text-xs font-semibold text-gray-500 uppercase mb-3">
-                      Détails du transport
-                    </p>
-                  </div>
-
-                  {/* TYPE DE SERVICE */}
+                  {/* Type de transport */}
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-                      Type de service *
-                    </label>
                     <select
                       required
                       value={service}
                       onChange={(e) => setService(e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-700 text-sm bg-gray-50 focus:bg-white transition-colors"
+                      className="w-full px-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-700"
                     >
-                      <option value="">Sélectionnez un service</option>
+                      <option value="">Type de transport *</option>
                       {services.map((s) => (
                         <option key={s} value={s}>{s}</option>
                       ))}
                     </select>
                   </div>
 
-                  {/* DÉPART / ARRIVÉE */}
+                  {/* Ligne 2 : Départ & Destination */}
                   <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-                        Départ *
-                      </label>
+                    <div className="relative">
+                      <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                       <input
                         type="text"
                         required
                         value={depart}
                         onChange={(e) => setDepart(e.target.value)}
-                        placeholder="Ex: Abidjan"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm bg-gray-50 focus:bg-white transition-colors placeholder:text-gray-400"
+                        placeholder="Départ *"
+                        className="w-full pl-10 pr-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400"
                       />
                     </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-                        Arrivée *
-                      </label>
+                    <div className="relative">
+                      <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                       <input
                         type="text"
                         required
                         value={arrivee}
                         onChange={(e) => setArrivee(e.target.value)}
-                        placeholder="Ex: Bamako"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm bg-gray-50 focus:bg-white transition-colors placeholder:text-gray-400"
+                        placeholder="Destination *"
+                        className="w-full pl-10 pr-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400"
                       />
                     </div>
                   </div>
 
-                  {/* MARCHANDISE / POIDS */}
+                  {/* Ligne 3 : Marchandise & Tonnes */}
                   <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-                        Marchandise *
-                      </label>
+                    <div className="relative">
+                      <Package className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                       <input
                         type="text"
                         required
                         value={marchandise}
                         onChange={(e) => setMarchandise(e.target.value)}
-                        placeholder="Ex: Cacao, ciment..."
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm bg-gray-50 focus:bg-white transition-colors placeholder:text-gray-400"
+                        placeholder="Marchandise *"
+                        className="w-full pl-10 pr-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400"
                       />
                     </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-                        Poids (tonnes)
-                      </label>
+                    <div className="relative">
+                      <Scale className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                       <input
                         type="number"
-                        value={poids}
-                        onChange={(e) => setPoids(e.target.value)}
-                        placeholder="Ex: 25"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm bg-gray-50 focus:bg-white transition-colors placeholder:text-gray-400"
+                        value={tonnes}
+                        onChange={(e) => setTonnes(e.target.value)}
+                        placeholder="Tonnes estimées"
+                        className="w-full pl-10 pr-3.5 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder:text-gray-400"
                       />
                     </div>
                   </div>
 
-                  {/* BOUTON */}
+                  {/* Bouton */}
                   <button
                     type="submit"
-                    className="w-full py-3.5 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-500 transition-all text-base shadow-lg shadow-green-600/20 hover:shadow-green-600/30 flex items-center justify-center gap-2 mt-2"
+                    className="w-full py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-500 transition-all text-sm shadow-lg shadow-green-600/20 flex items-center justify-center gap-2"
                   >
                     <Send className="h-4 w-4" />
                     Recevoir mon devis gratuit
                   </button>
 
-                  <p className="text-xs text-gray-400 text-center">
+                  <p className="text-[11px] text-gray-400 text-center">
                     Gratuit et sans engagement • Réponse sous 24h
                   </p>
                 </form>
